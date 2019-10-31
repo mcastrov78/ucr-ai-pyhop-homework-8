@@ -57,58 +57,49 @@ def get_possible_departures(state):
 
 def get_ordered_origin_list(state):
     origins = []
-    for origin in state.origin.values():
-        origins.append(origin)
-    origins.sort()
+    for item in state.origin.items():
+        origins.append([item[1], state.destin[item[0]]])
+    origins.sort(key=lambda x: x[0])
     return origins
 
 
-def get_ordered_destin_list(state):
-    destins = []
-    for destin in state.destin.values():
-        destins.append(destin)
-    destins.sort()
-    return destins
+def board_people(state, goal):
+    print("Arrivals: %s:" % get_possible_arrivals(state))
+    for arrival in get_possible_arrivals(state):
+        return [('board', arrival, state.lift_at)]
+
+
+def unboard_people(state, goal):
+    print("Departures: %s:" % get_possible_departures(state))
+    for departure in get_possible_departures(state):
+        return [('depart', departure, state.lift_at)]
+
+
+def move_to(state, destiny):
+    if state.lift_at < destiny:
+        return [('up', state.lift_at, destiny)]
+    elif state.lift_at > destiny:
+        return [('down', state.lift_at, destiny)]
+    return []
+
+
+def serve(state, goal, ordered_origin_list):
+    if len(ordered_origin_list) > 0:
+        origin = ordered_origin_list.pop(0)
+        return[('move_to', origin[0]),
+               ('board_people', goal),
+               ('move_to', origin[1]),
+               ('unboard_people', goal),
+               ('serve', goal, ordered_origin_list)]
+    else: return[]
 
 
 def serve_people(state, goal):
-    ordered_origin_list = get_ordered_origin_list(state)
-    ordered_destin_list = get_ordered_destin_list(state)
-    print("Origins: %s:" % ordered_origin_list)
-    print("Destins: %s:" % ordered_destin_list)
-
-    board_next(state, ordered_destin_list)
-
-    '''
-    print("Arrivals: %s:" % get_possible_arrivals(state))
-    for arrival in get_possible_arrivals(state):
-        board(state, arrival, state.lift_at)
-    pyhop.print_state(state)
-
-    print("Departures: %s:" % get_possible_departures(state))
-    for departure in get_possible_departures(state):
-        depart(state, arrival, state.lift_at)
-    pyhop.print_state(state)
-    '''
-    return False
+    return [('serve', goal, get_ordered_origin_list(state))]
 
 
-def board_next(state, ordered_origin_list):
-    if state.lift_at == ordered_origin_list[0]:
-        for arrival in get_possible_arrivals(state):
-            board(state, arrival, state.lift_at)
-            pyhop.print_state(state)
-        ordered_origin_list.pop(0)
-        return [('board_next', state, ordered_origin_list)]
-
-    elif state.lift_at < ordered_origin_list[0]:
-        #for next_origin in ordered_origin_list:
-        up(state, state.lift_at, ordered_origin_list[0])
-        for arrival in get_possible_arrivals(state):
-            board(state, arrival, state.lift_at)
-            pyhop.print_state(state)
-        ordered_origin_list.pop(0)
-        return [('board_next', state, ordered_origin_list)]
-    return False
-
-pyhop.declare_methods('serve_people', serve_people, board_next)
+pyhop.declare_methods('serve_people', serve_people)
+pyhop.declare_methods('serve', serve)
+pyhop.declare_methods('move_to', move_to)
+pyhop.declare_methods('board_people', board_people)
+pyhop.declare_methods('unboard_people', unboard_people)

@@ -76,6 +76,7 @@ elevators_domain.depart(state1, 'p1', 0)
 print_state(state1)
 
 # Planning Tests
+print("- PLANNING TESTING")
 state1 = State('state1')
 state1.lift_at = 0
 state1.origin = {'p0':3, 'p1':2, 'p2':0}
@@ -84,4 +85,6 @@ state1.boarded = {'p0':False, 'p1':False, 'p2':False}
 state1.served = {'p0':False, 'p1':False, 'p2':False}
 print_state(state1)
 
-pyhop(state1, [('serve_people', goal1)], verbose=1)
+print_methods()
+print_operators()
+pyhop(state1, [('serve_people', goal1)], verbose=3)
