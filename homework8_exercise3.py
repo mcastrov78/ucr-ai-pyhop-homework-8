@@ -9,7 +9,7 @@ print_methods()
 
 print("""
 ****************************************
-Exercise 2
+Exercise 4
 ****************************************
 """)
 
@@ -38,7 +38,7 @@ pyhop(state1, [('move_blocks', goal1)], verbose=1)
 
 print("""
 ****************************************
-Exercise 3
+Exercise 4
 ****************************************
 """)
 
@@ -85,6 +85,4 @@ state1.boarded = {'p0':False, 'p1':False, 'p2':False}
 state1.served = {'p0':False, 'p1':False, 'p2':False}
 print_state(state1)
 
-print_methods()
-print_operators()
 pyhop(state1, [('serve_people', goal1)], verbose=3)
