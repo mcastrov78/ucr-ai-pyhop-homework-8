@@ -24,7 +24,7 @@ state.clear = {'a':True, 'b':False, 'c':False, 'd':False, 'e':False}
 state.holding = False
 print_state(state)
 
-print("- Define goal:")
+print("- Define goal: d on the table")
 """
 A goal is a collection of some (but not necessarily all) of the state variables and their desired values.
 """

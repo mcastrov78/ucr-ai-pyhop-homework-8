@@ -17,13 +17,13 @@ print("- Define state1")
 """
 A state is a collection of all of the state variables and their values. Every state variable in the domain should have a value.
 """
-state2 = State('state1')
-state2.lift_at = 0
-state2.origin = {'p0':3, 'p1':2, 'p2':0}
-state2.destin = {'p0':0, 'p1':0, 'p2':4}
-state2.boarded = {'p0':False, 'p1':False, 'p2':False}
-state2.served = {'p0':False, 'p1':False, 'p2':False}
-print_state(state2)
+state1 = State('state1')
+state1.lift_at = 0
+state1.origin = {'p0':3, 'p1':2, 'p2':0}
+state1.destin = {'p0':0, 'p1':0, 'p2':4}
+state1.boarded = {'p0':False, 'p1':False, 'p2':False}
+state1.served = {'p0':False, 'p1':False, 'p2':False}
+print_state(state1)
 
 print("- Define goal1:")
 """
@@ -35,22 +35,23 @@ print_goal(goal1)
 
 # Simple TESTS for OPERATORS
 print("- Simple state change 1 ...")
-print("\tMust return False: %s" % elevators_domain.up(state2, 2, 0))
-print("\tMust return False: %s" % elevators_domain.board(state2, 'p1', 2))
-elevators_domain.up(state2, 0, 2)
-elevators_domain.board(state2, 'p1', 2)
-print_state(state2)
+print("\tMust return False: %s" % elevators_domain.up(state1, 2, 0))
+print("\tMust return False: %s" % elevators_domain.board(state1, 'p1', 2))
+elevators_domain.up(state1, 0, 2)
+elevators_domain.board(state1, 'p1', 2)
+print_state(state1)
+
 print("- Simple state change 2 ...")
-print("\tMust return False: %s" % elevators_domain.down(state2, 0, 2))
-print("\tMust return False: %s" % elevators_domain.depart(state2, 'p1', 2))
-elevators_domain.down(state2, 2, 0)
-elevators_domain.depart(state2, 'p1', 0)
-print_state(state2)
+print("\tMust return False: %s" % elevators_domain.down(state1, 0, 2))
+print("\tMust return False: %s" % elevators_domain.depart(state1, 'p1', 2))
+elevators_domain.down(state1, 2, 0)
+elevators_domain.depart(state1, 'p1', 0)
+print_state(state1)
 
 
 print("""
 ****************************************
-Exercise 4 TEST
+Exercise 4 TEST (elevators-00-strips/s3-4.pddl)
 ****************************************
 """)
 
@@ -87,7 +88,7 @@ print("- Define state3")
 """
 A state is a collection of all of the state variables and their values. Every state variable in the domain should have a value.
 """
-state3 = State('state3')
+state2 = State('state2')
 state2.lift_at = 0
 state2.origin = {'p1':1, 'p2':4, 'p3':2}
 state2.destin = {'p1':4, 'p2':0, 'p3':5}

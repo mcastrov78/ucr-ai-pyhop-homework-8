@@ -3,32 +3,58 @@ import pyhop
 
 # Operators
 def up(state, f1, f2):
+    """taken from:
+        (:action up
+        :parameters (?f1 - floor ?f2 - floor)
+        :precondition (and (lift-at ?f1) (above ?f1 ?f2))
+        :effect (and (lift-at ?f2) (not (lift-at ?f1))))"""
     if state.lift_at == f1 and f2 > f1:
         state.lift_at = f2
         return state
-    else: return False
+    else:
+        return False
 
 
 def down(state, f1, f2):
+    """taken from:
+        (:action down
+        :parameters (?f1 - floor ?f2 - floor)
+        :precondition (and (lift-at ?f1) (above ?f2 ?f1))
+        :effect (and (lift-at ?f2) (not (lift-at ?f1))))"""
     if state.lift_at == f1 and f2 < f1:
         state.lift_at = f2
         return state
-    else: return False
+    else:
+        return False
 
 
 def board(state, p, f):
+    """taken from:
+        (:action board
+        :parameters (?f - floor ?p - passenger)
+        :precondition (and (lift-at ?f) (origin ?p ?f))
+        :effect (boarded ?p))"""
     if state.lift_at == f and state.origin[p] == f:
         state.boarded[p] = True
         return state
-    else: return False
+    else:
+        return False
 
 
 def depart(state, p, f):
+    """taken from:
+        (:action depart
+        :parameters (?f - floor ?p - passenger)
+        :precondition (and (lift-at ?f) (destin ?p ?f)
+            (boarded ?p))
+        :effect (and (not (boarded ?p))
+            (served ?p)))"""
     if state.lift_at == f and state.destin[p] == f and state.boarded[p]:
         state.boarded[p] = False
         state.served[p] = True
         return state
-    else: return False
+    else:
+        return False
 
 
 pyhop.declare_operators(up, down, board, depart)
